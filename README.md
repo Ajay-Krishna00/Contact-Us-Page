@@ -1,8 +1,9 @@
-# React + Vite
+# Contact Us Page
+This project is a Contact Us page built using React. The page includes a form that users can fill out to send messages. The form submissions are handled using EmailJS, and all styling is done using Material-UI.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Features
+* React: A JavaScript library for building user interfaces.
+* Material-UI: A popular React UI framework for implementing Google's Material Design.
+* EmailJS: A service to send emails directly from your JavaScript application.
+### Demo
+![Screenshot of Demo of my website.](https://raw.githubusercontent.com/Ajay-Krishna00/Contact-us-page/main/src/image/demo.png)
