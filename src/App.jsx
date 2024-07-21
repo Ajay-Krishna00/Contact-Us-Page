@@ -87,15 +87,16 @@ const handleSubmit = (event) => {
     .then(
       () => {
         setLoading(false);
+        setAlertVisible(true);
         console.log("Email send Successfully!");
       },
       (error) => {
         setLoading(false);
+        setAlertVisible(true);
         console.log("Failed to send...", error.text);
       }
     );
     console.log(` Name:${name} \n Email:${email} \n Message:${message}`);
-    setAlertVisible(true);
     setName(""); // Clear the input field
     setEmail(""); // Clear the input field
     setMessage(""); // Clear the input field
