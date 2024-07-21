@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import  { useState,useRef } from "react";
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import { Alert, Button, CardMedia, Container, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
@@ -12,6 +12,8 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import pic from "../src/image/contactUsImg.jpg";
+import emailjs from "@emailjs/browser";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const theme = createTheme({
   typography: {
@@ -65,17 +67,39 @@ function App() {
   const handleChangeMessage = (event) => { 
     setMessage(event.target.value);
   }
-const [alertVisible, setAlertVisible] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // alert("Form Submitted Successfully!");
+
+const [alertVisible, setAlertVisible] = useState(false);
+const [loading, setLoading] = useState(false);
+const form = useRef();
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  setLoading(true); 
+
+  emailjs
+    .sendForm(
+      "service_y7q9pvf",
+      "template_wahkrq8",
+      form.current,
+      "8wiVYBZmne-rT4PkP"
+    )
+    .then(
+      () => {
+        setLoading(false);
+        console.log("Email send Successfully!");
+      },
+      (error) => {
+        setLoading(false);
+        console.log("Failed to send...", error.text);
+      }
+    );
     console.log(` Name:${name} \n Email:${email} \n Message:${message}`);
     setAlertVisible(true);
     setName(""); // Clear the input field
     setEmail(""); // Clear the input field
     setMessage(""); // Clear the input field
-  }
+}
 
   return (
     <>
@@ -114,11 +138,11 @@ const [alertVisible, setAlertVisible] = useState(false);
           <Card
             sx={{
               display: "flex",
-              flexDirection: {sm:"row",xs:"column"},
+              flexDirection: { sm: "row", xs: "column" },
               alignItems: "center",
               justifyContent: "center",
               padding: "20px",
-              width:{sm:"auto",xs:"84%"},
+              width: { sm: "auto", xs: "84%" },
               borderRadius: "20px",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
             }}
@@ -129,14 +153,17 @@ const [alertVisible, setAlertVisible] = useState(false);
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                width:{lg: "450px",md:"350px",sm:"250px",xs:"100%"},
+                width: { lg: "450px", md: "350px", sm: "250px", xs: "auto" },
               }}
             >
               <CardMedia
                 component={"img"}
                 alt={"Contact Us"}
                 image={pic}
-                sx={{ height: {md:"350px",sm:"250px",xs:"150px"}, width: "auto" }}
+                sx={{
+                  height: { md: "350px", sm: "250px", xs: "150px" },
+                  width: "auto",
+                }}
               />
 
               <Container
@@ -144,7 +171,7 @@ const [alertVisible, setAlertVisible] = useState(false);
                   display: "flex",
                   alignItems: "flex-start",
                   paddingBottom: "10px",
-                  marginLeft: { sm:"40px",xs:"0px" },
+                  marginLeft: { sm: "40px", xs: "0px" },
                 }}
               >
                 <Typography variant="h5">Get in touch through</Typography>
@@ -155,30 +182,30 @@ const [alertVisible, setAlertVisible] = useState(false);
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-evenly",
-                  width:{md:"auto",xs:"100%"},
+                  width: { md: "auto", xs: "100%" },
                 }}
               >
                 <IconButton
                   component="a"
                   href="mailto:enthusiastajay00@gmail.com"
-                  target="_blank"                       // Opens the link in a new tab.               
-                  rel="noopener noreferrer"             // Prevents the new tab from accessing the window.opener property.Adds security attributes when opening a new tab.
+                  target="_blank" // Opens the link in a new tab.
+                  rel="noopener noreferrer" // Prevents the new tab from accessing the window.opener property.Adds security attributes when opening a new tab.
                 >
                   <EmailIcon color="secondary" />
                 </IconButton>
                 <IconButton
                   component="a"
                   href="https://www.linkedin.com/in/ajay-krishna-d"
-                  target="_blank"                       // Opens the link in a new tab.
-                  rel="noopener noreferrer"             // Prevents the new tab from accessing the window.opener property.Adds security attributes when opening a new tab.
+                  target="_blank" // Opens the link in a new tab.
+                  rel="noopener noreferrer" // Prevents the new tab from accessing the window.opener property.Adds security attributes when opening a new tab.
                 >
                   <LinkedInIcon color="secondary" />
                 </IconButton>
                 <IconButton
                   component="a"
                   href="https://github.com/Ajay-Krishna00"
-                  target="_blank"                       // Opens the link in a new tab.
-                  rel="noopener noreferrer"             // Prevents the new tab from accessing the window.opener property.Adds security attributes when opening a new tab.
+                  target="_blank" // Opens the link in a new tab.
+                  rel="noopener noreferrer" // Prevents the new tab from accessing the window.opener property.Adds security attributes when opening a new tab.
                 >
                   <GitHubIcon color="secondary" />
                 </IconButton>
@@ -193,12 +220,14 @@ const [alertVisible, setAlertVisible] = useState(false);
               </Container>
             </Container>
             <Container
+              component="form"
+              ref={form}
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
                 justifyContent: "center",
-                width: "350px",
+                width: {sm:"350px",xs:"auto"},
                 p: "20px",
                 gap: "20px",
               }}
@@ -206,6 +235,7 @@ const [alertVisible, setAlertVisible] = useState(false);
               <Typography variant="h1">Contact Me</Typography>
               <TextField
                 variant="outlined"
+                name="user_name"
                 label="Name"
                 type="text"
                 value={name}
@@ -220,6 +250,7 @@ const [alertVisible, setAlertVisible] = useState(false);
               />
               <TextField
                 variant="outlined"
+                name="user_email"
                 label="Email"
                 type="Email"
                 value={email}
@@ -236,6 +267,7 @@ const [alertVisible, setAlertVisible] = useState(false);
                 multiline
                 variant="outlined"
                 label="Message"
+                name="message"
                 type="text"
                 value={message}
                 onChange={handleChangeMessage}
@@ -246,9 +278,22 @@ const [alertVisible, setAlertVisible] = useState(false);
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  position:"relative"
                 }}
               >
-                <StyledButton onClick={handleSubmit}>SUBMIT</StyledButton>
+                <StyledButton onClick={handleSubmit} disabled={loading}>SUBMIT</StyledButton>
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      position: 'absolute',
+                      color: 'white',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }} />
+                  )}
               </Container>
             </Container>
           </Card>
