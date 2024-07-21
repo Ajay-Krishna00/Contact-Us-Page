@@ -11,6 +11,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import pic from "../src/image/contactUsImg.jpg";
 
 const theme = createTheme({
   typography: {
@@ -134,7 +135,7 @@ const [alertVisible, setAlertVisible] = useState(false);
               <CardMedia
                 component={"img"}
                 alt={"Contact Us"}
-                image="src/image/contactUsImg.jpg"
+                image={pic}
                 sx={{ height: {md:"350px",sm:"250px",xs:"150px"}, width: "auto" }}
               />
 
