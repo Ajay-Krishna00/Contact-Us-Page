@@ -134,7 +134,7 @@ const [alertVisible, setAlertVisible] = useState(false);
               <CardMedia
                 component={"img"}
                 alt={"Contact Us"}
-                image="src/image/contactUsImg.jpg"
+                image="/src/image/contactUsImg.jpg"
                 sx={{ height: {md:"350px",sm:"250px",xs:"150px"}, width: "auto" }}
               />
 
